@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KaziLink — Online Jobs in Kenya</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --green:   #006B3F;
+    --red:     #BB0000;
+    --gold:    #D4A017;
+    --cream:   #FAF5EC;
+    --earth:   #C8773A;
+    --dark:    #1A1208;
+    --muted:   #6B5E4A;
+    --card:    #FFFFFF;
+    --border:  rgba(0,0,0,0.09);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 5%;
+    background: var(--cream);
+    border-bottom: 1.5px solid var(--border);
+    backdrop-filter: blur(8px);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--dark); letter-spacing: -0.03em;
+  }
+  .logo span { color: var(--green); }
+  .logo em { color: var(--earth); font-style: normal; }
+  nav ul { list-style: none; display: flex; gap: 2.2rem; }
+  nav ul a {
+    text-decoration: none; color: var(--muted);
+    font-size: .9rem; font-weight: 500; letter-spacing: .02em;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--green); }
+  .nav-cta {
+    background: var(--green); color: #fff !important;
+    padding: .55rem 1.3rem; border-radius: 100px;
+    font-weight: 600 !important; transition: background .2s !important;
+  }
+  .nav-cta:hover { background: var(--earth) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 7rem 5% 4rem;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(0,107,63,.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(200,119,58,.09) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(0,107,63,.1); border: 1px solid rgba(0,107,63,.25);
+    border-radius: 100px; padding: .35rem 1rem;
+    font-size: .78rem; font-weight: 600; color: var(--green);
+    letter-spacing: .06em; text-transform: uppercase;
+    margin-bottom: 1.4rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge::before { content: '🇰🇪'; font-size: 1rem; }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.4rem);
+    font-weight: 900; line-height: 1.06;
+    letter-spacing: -.03em;
+    animation: fadeUp .7s .1s ease both;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--green);
+  }
+  .hero h1 .underline-gold {
+    position: relative; display: inline-block;
+  }
+  .hero h1 .underline-gold::after {
+    content: '';
+    position: absolute; left: 0; bottom: -4px;
+    width: 100%; height: 4px;
+    background: var(--gold); border-radius: 2px;
+  }
+
+  .hero-sub {
+    margin-top: 1.4rem; font-size: 1.05rem; color: var(--muted);
+    line-height: 1.7; max-width: 480px;
+    animation: fadeUp .7s .2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;
+    animation: fadeUp .7s .3s ease both;
+  }
+  .btn-primary {
+    background: var(--green); color: #fff;
+    padding: .85rem 2rem; border-radius: 100px;
+    font-size: .95rem; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 18px rgba(0,107,63,.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,107,63,.38); }
+  .btn-outline {
+    background: transparent; color: var(--dark);
+    padding: .85rem 2rem; border-radius: 100px;
+    font-size: .95rem; font-weight: 600;
+    text-decoration: none; border: 1.5px solid var(--dark);
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+  .hero-stats {
+    display: flex; gap: 2rem; margin-top: 3rem;
+    animation: fadeUp .7s .4s ease both;
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem; font-weight: 900;
+    line-height: 1; color: var(--dark);
+  }
+  .stat-label { font-size: .78rem; color: var(--muted); margin-top: .2rem; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+
+  /* hero visual */
+  .hero-visual {
+    position: relative;
+    display: flex; flex-direction: column; gap: 1rem;
+    animation: fadeIn .9s .2s ease both;
+  }
+  .job-card-preview {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+    transition: transform .25s;
+  }
+  .job-card-preview:hover { transform: translateX(-6px); }
+  .job-card-preview:nth-child(2) { margin-left: 3rem; }
+  .job-card-preview:nth-child(3) { margin-left: 1.5rem; }
+  .company-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .card-info h4 { font-size: .95rem; font-weight: 600; }
+  .card-info p { font-size: .78rem; color: var(--muted); margin-top: .15rem; }
+  .card-badge {
+    margin-left: auto; flex-shrink: 0;
+    background: rgba(0,107,63,.1);
+    color: var(--green); font-size: .7rem; font-weight: 700;
+    padding: .3rem .7rem; border-radius: 100px; letter-spacing: .04em;
+  }
+  .card-badge.remote { background: rgba(212,160,23,.12); color: #8B6914; }
+  .card-badge.hybrid { background: rgba(187,0,0,.08); color: var(--red); }
+
+  /* floating salary pill */
+  .salary-pill {
+    position: absolute; right: -1.5rem; top: 1rem;
+    background: var(--green); color: #fff;
+    border-radius: 100px; padding: .5rem 1.1rem;
+    font-size: .8rem; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,107,63,.35);
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+  /* ── SEARCH BAR ── */
+  .search-section {
+    background: var(--dark);
+    padding: 2.8rem 5%;
+  }
+  .search-wrap {
+    max-width: 860px; margin: 0 auto;
+    display: flex; gap: .75rem; flex-wrap: wrap;
+  }
+  .search-wrap input, .search-wrap select {
+    flex: 1; min-width: 180px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 12px; padding: .9rem 1.2rem;
+    color: #fff; font-family: 'DM Sans', sans-serif;
+    font-size: .95rem; outline: none;
+    transition: border-color .2s;
+  }
+  .search-wrap input::placeholder { color: rgba(255,255,255,.45); }
+  .search-wrap select option { color: var(--dark); }
+  .search-wrap input:focus, .search-wrap select:focus { border-color: var(--gold); }
+  .search-wrap button {
+    background: var(--gold); color: var(--dark);
+    border: none; border-radius: 12px; padding: .9rem 2rem;
+    font-weight: 700; font-size: .95rem; cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+  .search-wrap button:hover { background: #e6b520; transform: scale(1.02); }
+
+  /* ── CATEGORIES ── */
+  .section { padding: 5rem 5%; }
+  .section-label {
+    font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--earth);
+    margin-bottom: .6rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 900; line-height: 1.15;
+    letter-spacing: -.02em;
+  }
+  .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 2.5rem; gap: 1rem; flex-wrap: wrap;
+  }
+  .see-all {
+    font-size: .88rem; font-weight: 600; color: var(--green);
+    text-decoration: none; border-bottom: 1.5px solid var(--green);
+    padding-bottom: .1rem; white-space: nowrap;
+    transition: color .2s;
+  }
+  .see-all:hover { color: var(--earth); border-color: var(--earth); }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
+  }
+  .cat-card {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    cursor: pointer; transition: transform .22s, box-shadow .22s, border-color .22s;
+    position: relative; overflow: hidden;
+  }
+  .cat-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--cat-color, var(--green));
+    opacity: 0; transition: opacity .22s;
+  }
+  .cat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); border-color: transparent; }
+  .cat-card:hover::before { opacity: .06; }
+  .cat-icon { font-size: 2rem; margin-bottom: .8rem; display: block; }
+  .cat-name { font-weight: 700; font-size: .95rem; }
+  .cat-count { font-size: .78rem; color: var(--muted); margin-top: .25rem; }
+
+  /* ── JOBS ── */
+  .jobs-section { background: #fff; padding: 5rem 5%; }
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.4rem;
+    margin-top: 2.5rem;
+  }
+  .job-card {
+    border: 1.5px solid var(--border); border-radius: 20px;
+    padding: 1.6rem; background: var(--cream);
+    transition: transform .22s, box-shadow .22s, border-color .22s;
+    cursor: pointer; position: relative;
+  }
+  .job-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.1);
+    border-color: var(--green);
+  }
+  .job-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #FFFCF2 0%, var(--cream) 100%);
+  }
+  .featured-tag {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    background: var(--gold); color: var(--dark);
+    font-size: .65rem; font-weight: 800; letter-spacing: .07em;
+    text-transform: uppercase; padding: .25rem .6rem;
+    border-radius: 100px;
+  }
+  .job-top { display: flex; align-items: center; gap: .9rem; margin-bottom: 1rem; }
+  .company-logo {
+    width: 50px; height: 50px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; border: 1.5px solid var(--border);
+    background: #fff; flex-shrink: 0;
+  }
+  .job-meta h3 { font-size: 1rem; font-weight: 700; }
+  .company-name { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+  .job-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.1rem; }
+  .tag {
+    font-size: .72rem; font-weight: 600; padding: .3rem .75rem;
+    border-radius: 100px; border: 1px solid;
+    letter-spacing: .02em;
+  }
+  .tag-remote { color: var(--green); border-color: rgba(0,107,63,.3); background: rgba(0,107,63,.07); }
+  .tag-type { color: var(--muted); border-color: var(--border); background: #fff; }
+  .tag-hot { color: var(--red); border-color: rgba(187,0,0,.25); background: rgba(187,0,0,.06); }
+  .job-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; }
+  .salary { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--green); }
+  .posted { font-size: .75rem; color: var(--muted); }
+  .apply-btn {
+    background: var(--green); color: #fff;
+    border: none; border-radius: 100px;
+    padding: .5rem 1.2rem; font-size: .82rem; font-weight: 700;
+    cursor: pointer; transition: background .2s, transform .15s;
+  }
+  .apply-btn:hover { background: var(--earth); transform: scale(1.04); }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { padding: 5rem 5%; background: var(--dark); color: #fff; position: relative; overflow: hidden; }
+  .how-section::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,107,63,.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .how-section .section-label { color: var(--gold); }
+  .how-section .section-title { color: #fff; }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem; margin-top: 3rem;
+  }
+  .step-card {
+    position: relative; padding: 2rem;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px;
+    background: rgba(255,255,255,.04);
+    backdrop-filter: blur(6px);
+    transition: border-color .25s, background .25s;
+  }
+  .step-card:hover { border-color: rgba(212,160,23,.5); background: rgba(255,255,255,.07); }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900;
+    color: rgba(255,255,255,.06); line-height: 1;
+    margin-bottom: .5rem;
+  }
+  .step-icon { font-size: 2rem; margin-bottom: .8rem; display: block; }
+  .step-card h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+  .step-card p { font-size: .88rem; color: rgba(255,255,255,.55); line-height: 1.65; }
+
+  /* ── EMPLOYERS ── */
+  .employers-section { padding: 4rem 5%; text-align: center; }
+  .employers-title { font-family: 'Playfair Display',serif; font-size: 1.2rem; font-weight: 700; color: var(--muted); margin-bottom: 2rem; }
+  .employers-logos {
+    display: flex; flex-wrap: wrap; gap: 1.5rem;
+    align-items: center; justify-content: center;
+  }
+  .employer-logo {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: .8rem 1.6rem;
+    font-weight: 700; font-size: .9rem; color: var(--muted);
+    transition: border-color .2s, color .2s;
+  }
+  .employer-logo:hover { border-color: var(--green); color: var(--green); }
+
+  /* ── BANNER ── */
+  .banner {
+    margin: 0 5% 4rem;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--green) 0%, #004d2d 100%);
+    padding: 3.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+    position: relative; overflow: hidden;
+  }
+  .banner::after {
+    content: '🇰🇪';
+    position: absolute; right: 5rem; top: 50%;
+    transform: translateY(-50%); font-size: 8rem;
+    opacity: .08; pointer-events: none;
+  }
+  .banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 900; color: #fff; line-height: 1.2;
+  }
+  .banner p { color: rgba(255,255,255,.7); margin-top: .6rem; font-size: .95rem; }
+  .btn-gold {
+    background: var(--gold); color: var(--dark);
+    padding: .9rem 2rem; border-radius: 100px;
+    font-size: .95rem; font-weight: 700;
+    text-decoration: none; border: none; cursor: pointer;
+    white-space: nowrap;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 18px rgba(212,160,23,.4);
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,160,23,.5); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,.55);
+    padding: 3.5rem 5% 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem; margin-bottom: 2.5rem;
+  }
+  .footer-brand .logo { color: #fff; font-size: 1.4rem; }
+  .footer-brand p { font-size: .85rem; line-height: 1.65; margin-top: .8rem; color: rgba(255,255,255,.45); }
+  .footer-col h4 { color: #fff; font-size: .88rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: .04em; text-transform: uppercase; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+  .footer-col ul a { font-size: .84rem; color: rgba(255,255,255,.45); text-decoration: none; transition: color .2s; }
+  .footer-col ul a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding-top: 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    font-size: .8rem;
+  }
+  .social-links { display: flex; gap: 1rem; }
+  .social-links a {
+    color: rgba(255,255,255,.4); text-decoration: none; font-size: .82rem;
+    transition: color .2s;
+  }
+  .social-links a:hover { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 6rem; }
+    .hero-visual { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    nav ul { display: none; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .banner { padding: 2rem; }
+    .banner::after { display: none; }
+    .hero-stats { flex-wrap: wrap; gap: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Kazi<span>Link</span><em>.</em></div>
+  <ul>
+    <li><a href="#jobs">Browse Jobs</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#" class="nav-cta">Post a Job</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Kenya's #1 Online Job Platform</div>
+    <h1>
+      Find Your<br/>
+      <em>Dream</em> Remote<br/>
+      Job in <span class="underline-gold">Kenya</span>
+    </h1>
+    <p class="hero-sub">
+      Connecting talented Kenyan professionals with top employers across tech, finance, creative, and more — work from Nairobi, Mombasa, or anywhere.
+    </p>
+    <div class="hero-actions">
+      <a href="#jobs" class="btn-primary">Explore Jobs</a>
+      <a href="#" class="btn-outline">Upload CV</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">12K+</span>
+        <span class="stat-label">Active Jobs</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4.8K</span>
+        <span class="stat-label">Employers</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">95K</span>
+        <span class="stat-label">Job Seekers</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="salary-pill">💰 Up to KSh 250K/mo</div>
+    <div class="job-card-preview">
+      <div class="company-icon" style="background:#EBF5FF;">💻</div>
+      <div class="card-info">
+        <h4>Senior Software Engineer</h4>
+        <p>Safaricom PLC · Nairobi</p>
+      </div>
+      <span class="card-badge">Remote</span>
+    </div>
+    <div class="job-card-preview">
+      <div class="company-icon" style="background:#FFF3E8;">📊</div>
+      <div class="card-info">
+        <h4>Data Analyst</h4>
+        <p>Equity Bank · Hybrid</p>
+      </div>
+      <span class="card-badge remote">Hybrid</span>
+    </div>
+    <div class="job-card-preview">
+      <div class="company-icon" style="background:#F0FFF4;">✍️</div>
+      <div class="card-info">
+        <h4>Content Strategist</h4>
+        <p>Nation Media Group</p>
+      </div>
+      <span class="card-badge hybrid">Full-time</span>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-wrap">
+    <input type="text" placeholder="Job title, keywords…" />
+    <select>
+      <option value="">All Categories</option>
+      <option>Technology</option>
+      <option>Finance & Banking</option>
+      <option>Creative & Design</option>
+      <option>Marketing</option>
+      <option>Healthcare</option>
+      <option>Education</option>
+      <option>Customer Service</option>
+    </select>
+    <select>
+      <option value="">Any Location</option>
+      <option>Remote (Kenya)</option>
+      <option>Nairobi</option>
+      <option>Mombasa</option>
+      <option>Kisumu</option>
+      <option>Nakuru</option>
+      <option>Eldoret</option>
+    </select>
+    <button>Search Jobs →</button>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Browse by Category</p>
+      <h2 class="section-title">Explore Job<br/>Categories</h2>
+    </div>
+    <a href="#" class="see-all">View all categories →</a>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card" style="--cat-color:#006B3F">
+      <span class="cat-icon">💻</span>
+      <div class="cat-name">Technology & IT</div>
+      <div class="cat-count">3,420 open positions</div>
+    </div>
+    <div class="cat-card" style="--cat-color:#D4A017">
+      <span class="cat-icon">📊</span>
+      <div class="cat-name">Finance & Banking</div>
+      <div class="cat-count">1,840 open positions</div>
+    </div>
+    <div class="cat-card" style="--cat-color:#C8773A">
+      <span class="cat-icon">🎨</span>
+      <div class="cat-name">Creative & Design</div>
+      <div class="cat-count">980 open positions</div>
+    </div>
+    <div class="cat-card" style="--cat-color:#BB0000">
+      <span class="cat-icon">📣</span>
+      <div class="cat-name">Marketing & PR</div>
+      <div class="cat-count">1,120 open positions</div>
+    </div>
+    <div class="cat-card" style="--cat-color:#2C7BB3">
+      <span class="cat-icon">🏥</span>
+      <div class="cat-name">Healthcare</div>
+      <div class="cat-count">760 open positions</div>
+    </div>
+    <div class="cat-card" style="--cat-color:#5C4B99">
+      <span class="cat-icon">📚</span>
+      <div class="cat-name">Education & Training</div>
+      <div class="cat-count">620 open positions</div>
+    </div>
+    <div class="cat-card" style="--cat-color:#1A7A5E">
+      <span class="cat-icon">🌱</span>
+      <div class="cat-name">Agriculture & Agri-tech</div>
+      <div class="cat-count">440 open positions</div>
+    </div>
+    <div class="cat-card" style="--cat-color:#C8773A">
+      <span class="cat-icon">🎧</span>
+      <div class="cat-name">Customer Service</div>
+      <div class="cat-count">890 open positions</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED JOBS -->
+<section class="jobs-section" id="jobs">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Latest Opportunities</p>
+      <h2 class="section-title">Featured Jobs</h2>
+    </div>
+    <a href="#" class="see-all">See all 12,000+ jobs →</a>
+  </div>
+  <div class="jobs-grid">
+
+    <div class="job-card featured">
+      <div class="featured-tag">⭐ Featured</div>
+      <div class="job-top">
+        <div class="company-logo">🦁</div>
+        <div class="job-meta">
+          <h3>Full-Stack Developer</h3>
+          <p class="company-name">M-KOPA Solar · Nairobi</p>
+        </div>
+      </div>
+      <div class="job-tags">
+        <span class="tag tag-remote">🌍 Remote</span>
+        <span class="tag tag-type">Full-time</span>
+        <span class="tag tag-hot">🔥 Urgent</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Build scalable fintech solutions powering solar energy access for thousands of Kenyan households.</p>
+      <div class="job-footer">
+        <div>
+          <div class="salary">KSh 180,000–250,000</div>
+          <div class="posted">Posted 2 days ago</div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <div class="job-top">
+        <div class="company-logo">🦅</div>
+        <div class="job-meta">
+          <h3>UX/UI Designer</h3>
+          <p class="company-name">Cellulant · Remote</p>
+        </div>
+      </div>
+      <div class="job-tags">
+        <span class="tag tag-remote">🌍 Remote</span>
+        <span class="tag tag-type">Contract</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Design intuitive digital payment experiences used by millions across 18 African markets.</p>
+      <div class="job-footer">
+        <div>
+          <div class="salary">KSh 120,000–160,000</div>
+          <div class="posted">Posted 3 days ago</div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <div class="job-top">
+        <div class="company-logo">📡</div>
+        <div class="job-meta">
+          <h3>Digital Marketing Lead</h3>
+          <p class="company-name">Safaricom · Nairobi</p>
+        </div>
+      </div>
+      <div class="job-tags">
+        <span class="tag tag-type">Hybrid</span>
+        <span class="tag tag-type">Full-time</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Drive customer acquisition strategies for M-PESA and digital services at Africa's leading telco.</p>
+      <div class="job-footer">
+        <div>
+          <div class="salary">KSh 200,000–280,000</div>
+          <div class="posted">Posted 1 day ago</div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <div class="job-top">
+        <div class="company-logo">💊</div>
+        <div class="job-meta">
+          <h3>Health Data Scientist</h3>
+          <p class="company-name">Amref Health Africa</p>
+        </div>
+      </div>
+      <div class="job-tags">
+        <span class="tag tag-remote">🌍 Remote</span>
+        <span class="tag tag-type">Full-time</span>
+        <span class="tag tag-hot">🔥 New</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Use data to improve community health outcomes across East Africa. Work remotely from Kenya.</p>
+      <div class="job-footer">
+        <div>
+          <div class="salary">KSh 140,000–190,000</div>
+          <div class="posted">Posted today</div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <div class="job-card featured">
+      <div class="featured-tag">⭐ Featured</div>
+      <div class="job-top">
+        <div class="company-logo">🚀</div>
+        <div class="job-meta">
+          <h3>Product Manager</h3>
+          <p class="company-name">Twiga Foods · Nairobi</p>
+        </div>
+      </div>
+      <div class="job-tags">
+        <span class="tag tag-type">Hybrid</span>
+        <span class="tag tag-type">Full-time</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Lead the roadmap for Kenya's fastest-growing B2B food distribution platform serving 5,000+ vendors.</p>
+      <div class="job-footer">
+        <div>
+          <div class="salary">KSh 220,000–300,000</div>
+          <div class="posted">Posted 4 days ago</div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <div class="job-top">
+        <div class="company-logo">✍️</div>
+        <div class="job-meta">
+          <h3>Content Writer (SEO)</h3>
+          <p class="company-name">iWriter Pro · Remote</p>
+        </div>
+      </div>
+      <div class="job-tags">
+        <span class="tag tag-remote">🌍 Remote</span>
+        <span class="tag tag-type">Freelance</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Create high-quality articles and blog posts for global clients. Set your own schedule from anywhere in Kenya.</p>
+      <div class="job-footer">
+        <div>
+          <div class="salary">KSh 40,000–80,000</div>
+          <div class="posted">Posted 5 days ago</div>
+        </div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Simple Process</p>
+      <h2 class="section-title">Land Your Job<br/>in 3 Easy Steps</h2>
+    </div>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <span class="step-icon">📝</span>
+      <h3>Create Your Profile</h3>
+      <p>Sign up free and build your professional profile. Upload your CV, highlight your skills, and let employers find you.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <span class="step-icon">🔍</span>
+      <h3>Discover Opportunities</h3>
+      <p>Browse thousands of remote, hybrid, and on-site jobs. Filter by salary, location, category, or company size.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <span class="step-icon">🚀</span>
+      <h3>Apply with One Click</h3>
+      <p>Apply instantly with your KaziLink profile. Track all your applications in one dashboard and get notified in real time.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <span class="step-icon">🎉</span>
+      <h3>Get Hired & Grow</h3>
+      <p>Receive offers, negotiate salary, and start your new role. Access career resources to keep growing in your field.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EMPLOYERS -->
+<section class="employers-section">
+  <p class="employers-title">Trusted by Kenya's Leading Employers</p>
+  <div class="employers-logos">
+    <div class="employer-logo">Safaricom</div>
+    <div class="employer-logo">Equity Bank</div>
+    <div class="employer-logo">M-KOPA Solar</div>
+    <div class="employer-logo">Twiga Foods</div>
+    <div class="employer-logo">Cellulant</div>
+    <div class="employer-logo">Amref Health</div>
+    <div class="employer-logo">Nation Media</div>
+    <div class="employer-logo">KCB Group</div>
+    <div class="employer-logo">NCBA Bank</div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<div class="banner">
+  <div>
+    <h2>Are You an Employer?<br/>Post Your Job Today.</h2>
+    <p>Reach over 95,000 vetted Kenyan professionals. First job post is free.</p>
+  </div>
+  <a href="#" class="btn-gold">Post a Job — It's Free</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Kazi<span>Link</span><em>.</em></div>
+      <p>Kenya's leading platform for remote and online jobs. Connecting talent with opportunity since 2024.</p>
+    </div>
+    <div class="footer-col">
+      <h4>For Job Seekers</h4>
+      <ul>
+        <li><a href="#">Browse Jobs</a></li>
+        <li><a href="#">Upload CV</a></li>
+        <li><a href="#">Career Resources</a></li>
+        <li><a href="#">Salary Guide</a></li>
+        <li><a href="#">Job Alerts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>For Employers</h4>
+      <ul>
+        <li><a href="#">Post a Job</a></li>
+        <li><a href="#">Search Candidates</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Recruiter Tools</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 KaziLink. All rights reserved. 🇰🇪 Made in Kenya</span>
+    <div class="social-links">
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter / X</a>
+      <a href="#">Facebook</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
